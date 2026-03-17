@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smokovskiy | Telegram Guarantor</title>
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     
-    <!-- Стили -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     
-    <!-- Библиотеки -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
@@ -23,19 +20,17 @@
     <div class="bg-glow"></div>
 
     <div class="container-main">
-        <!-- Переключатель -->
         <header class="nav-header">
             <button onclick="toggleLang()" class="lang-toggle">
                 <span data-t="switchLang">English</span>
             </button>
         </header>
 
-        <!-- Профиль -->
         <section class="hero-section">
             <div class="avatar-wrapper">
                 <div class="avatar-glow"></div>
                 <div class="avatar-inner">
-                    <img src="https://picsum.photos/seed/smokovskiy/400/400" alt="Avatar" referrerPolicy="no-referrer">
+                    <img src="https://picsum.photos/seed/smokovskiy/400/400" alt="Avatar">
                 </div>
             </div>
             <h1 class="title">Smokovskiy</h1>
@@ -46,7 +41,7 @@
             <p class="subtitle" data-t="subtitle">Безопасные сделки | Комиссия 4%</p>
         </section>
 
-        <!-- Каналы -->
+        <!-- ПЛАШКИ КАНАЛОВ (Теперь все 4) -->
         <section class="links-grid">
             <p class="section-label" data-t="channelsTitle">Основные каналы</p>
             
@@ -76,9 +71,17 @@
                 </div>
                 <i data-lucide="chevron-right" class="arrow"></i>
             </a>
+
+            <a href="https://t.me/SmokovskiyNews" target="_blank" class="glass-card link-item">
+                <div class="icon-box"><i data-lucide="message-square"></i></div>
+                <div class="link-content">
+                    <h3 data-t="chan4">Новостной канал</h3>
+                    <p>@SmokovskiyNews</p>
+                </div>
+                <i data-lucide="chevron-right" class="arrow"></i>
+            </a>
         </section>
 
-        <!-- Комиссия -->
         <section class="commission-box glass-card neon-glow">
             <div class="box-header">
                 <div class="icon-circle"><i data-lucide="zap"></i></div>
@@ -88,15 +91,11 @@
             <div class="tag-blue"><span data-t="commissionRate">Комиссия — 4%</span></div>
         </section>
 
-        <!-- Инструкция -->
         <section class="steps-section">
             <h2 class="section-title" data-t="howItWorksTitle">Как проходят сделки</h2>
-            <div class="steps-list" id="steps-container">
-                <!-- Шаги вставляются через JS -->
-            </div>
+            <div class="steps-list" id="steps-container"></div>
         </section>
 
-        <!-- Реквизиты -->
         <section class="wallet-section glass-card">
             <p class="section-label" data-t="paymentTitle">Реквизиты для сделки</p>
             <div class="wallet-box">
@@ -105,7 +104,6 @@
             </div>
         </section>
 
-        <!-- Кнопка -->
         <footer class="footer-action">
             <a href="https://t.me/Smokovskiy" target="_blank" class="main-btn shimmer">
                 <span data-t="contactBtn">Связаться с гарантом</span>

@@ -1,4 +1,3 @@
-// Данные переводов
 const translations = {
     ru: {
         role: "Telegram Гарант",
@@ -7,6 +6,7 @@ const translations = {
         chan1: "Адаптер с ссылками",
         chan2: "Отзывы со сделок",
         chan3: "Где я гарант",
+        chan4: "Новостной канал",
         commissionTitle: "Гарант сделок",
         commissionText: "Я выступаю гарантом между сторонами сделки. Оплата проходит через меня для безопасности обеих сторон.",
         commissionRate: "Комиссия — 4%",
@@ -31,6 +31,7 @@ const translations = {
         chan1: "Links Adapter",
         chan2: "Deal Reviews",
         chan3: "Verification",
+        chan4: "News Channel",
         commissionTitle: "Guarantor",
         commissionText: "I act as a guarantor between the parties of the deal. Payment passes through me for safety.",
         commissionRate: "Commission — 4%",
@@ -52,24 +53,23 @@ const translations = {
 
 let currentLang = 'ru';
 
-// Инициализация
 document.addEventListener('DOMContentLoaded', () => {
+    // Сначала создаем иконки
     lucide.createIcons();
+    // Обновляем текст
     updateUI();
+    // Запускаем анимацию
     animateEntrance();
 });
 
-// Обновление интерфейса
 function updateUI() {
     const t = translations[currentLang];
     
-    // Текстовые элементы
     document.querySelectorAll('[data-t]').forEach(el => {
         const key = el.getAttribute('data-t');
         if (t[key]) el.textContent = t[key];
     });
 
-    // Отрисовка шагов
     const stepsContainer = document.getElementById('steps-container');
     stepsContainer.innerHTML = '';
     t.steps.forEach((step, i) => {
@@ -80,24 +80,11 @@ function updateUI() {
     });
 }
 
-// Переключение языка
 function toggleLang() {
     currentLang = currentLang === 'ru' ? 'en' : 'ru';
-    document.body.className = `lang-${currentLang}`;
-    
-    // Плавная смена контента
-    gsap.to('.container-main', {
-        opacity: 0,
-        y: 10,
-        duration: 0.2,
-        onComplete: () => {
-            updateUI();
-            gsap.to('.container-main', { opacity: 1, y: 0, duration: 0.4 });
-        }
-    });
+    updateUI();
 }
 
-// Копирование кошелька
 function copyWallet() {
     const address = "UQA0SJengh1cb8MJ991gEF-FlpOC6Y3wn6vzkdMiHuO-mmwP";
     const btn = document.getElementById('copy-btn');
@@ -105,23 +92,17 @@ function copyWallet() {
 
     navigator.clipboard.writeText(address).then(() => {
         btn.textContent = t.copied;
-        btn.style.color = '#10b981'; // Зеленый
-        setTimeout(() => {
-            btn.textContent = t.copy;
-            btn.style.color = '#3b82f6';
-        }, 2000);
+        setTimeout(() => { btn.textContent = t.copy; }, 2000);
     });
 }
 
-// Анимация появления
 function animateEntrance() {
     const tl = gsap.timeline();
 
-    tl.from('.avatar-wrapper', { scale: 0, opacity: 0, duration: 0.8, ease: "back.out(1.7)" })
-      .from('.title', { y: 20, opacity: 0, duration: 0.5 }, "-=0.4")
-      .from('.badge-row, .subtitle', { y: 10, opacity: 0, duration: 0.5 }, "-=0.3")
-      .from('.link-item', { x: -20, opacity: 0, stagger: 0.1, duration: 0.5 }, "-=0.2")
-      .from('.commission-box', { scale: 0.9, opacity: 0, duration: 0.6 }, "-=0.2")
-      .from('.step-card', { y: 20, opacity: 0, stagger: 0.1, duration: 0.4 }, "-=0.3")
-      .from('.wallet-section, .main-btn', { y: 30, opacity: 0, duration: 0.6 }, "-=0.2");
+    // Плавное проявление всех элементов
+    tl.to('.hero-section', { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" })
+      .to('.link-item', { opacity: 1, x: 0, stagger: 0.1, duration: 0.5, ease: "power2.out" }, "-=0.4")
+      .to('.commission-box', { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.2)" }, "-=0.3")
+      .to('.step-card', { opacity: 1, y: 0, stagger: 0.1, duration: 0.4 }, "-=0.3")
+      .to('.wallet-section, .main-btn', { opacity: 1, y: 0, duration: 0.6 }, "-=0.2");
 }
