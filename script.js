@@ -54,17 +54,14 @@ const translations = {
 let currentLang = 'ru';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Сначала создаем иконки
     lucide.createIcons();
-    // Обновляем текст
     updateUI();
-    // Запускаем анимацию
     animateEntrance();
+    createFloatingIcons();
 });
 
 function updateUI() {
     const t = translations[currentLang];
-    
     document.querySelectorAll('[data-t]').forEach(el => {
         const key = el.getAttribute('data-t');
         if (t[key]) el.textContent = t[key];
@@ -89,20 +86,54 @@ function copyWallet() {
     const address = "UQA0SJengh1cb8MJ991gEF-FlpOC6Y3wn6vzkdMiHuO-mmwP";
     const btn = document.getElementById('copy-btn');
     const t = translations[currentLang];
-
     navigator.clipboard.writeText(address).then(() => {
         btn.textContent = t.copied;
         setTimeout(() => { btn.textContent = t.copy; }, 2000);
     });
 }
 
+// Летающие галочки
+function createFloatingIcons() {
+    const container = document.getElementById('floating-icons');
+    const iconCount = 12;
+
+    for (let i = 0; i < iconCount; i++) {
+        const icon = document.createElement('div');
+        icon.className = 'floating-icon';
+        icon.innerHTML = '<i data-lucide="shield-check"></i>';
+        
+        // Случайная позиция
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        const size = 15 + Math.random() * 30;
+        
+        icon.style.left = `${x}px`;
+        icon.style.top = `${y}px`;
+        icon.style.fontSize = `${size}px`;
+        
+        container.appendChild(icon);
+        
+        // Анимация GSAP
+        gsap.to(icon, {
+            x: "random(-100, 100)",
+            y: "random(-100, 100)",
+            rotation: "random(-360, 360)",
+            duration: "random(10, 20)",
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+    }
+    lucide.createIcons();
+}
+
 function animateEntrance() {
     const tl = gsap.timeline();
+    gsap.set('.hero-section, .link-item, .commission-box, .step-card, .wallet-section, .main-btn', { opacity: 0, y: 30 });
 
-    // Плавное проявление всех элементов
-    tl.to('.hero-section', { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" })
-      .to('.link-item', { opacity: 1, x: 0, stagger: 0.1, duration: 0.5, ease: "power2.out" }, "-=0.4")
-      .to('.commission-box', { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.2)" }, "-=0.3")
-      .to('.step-card', { opacity: 1, y: 0, stagger: 0.1, duration: 0.4 }, "-=0.3")
-      .to('.wallet-section, .main-btn', { opacity: 1, y: 0, duration: 0.6 }, "-=0.2");
+    tl.to('.hero-section', { opacity: 1, y: 0, duration: 1, ease: "power3.out" })
+      .to('.link-item', { opacity: 1, y: 0, stagger: 0.1, duration: 0.6 }, "-=0.6")
+      .to('.commission-box', { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
+      .to('.step-card', { opacity: 1, y: 0, stagger: 0.1, duration: 0.5 }, "-=0.4")
+      .to('.wallet-section, .main-btn', { opacity: 1, y: 0, duration: 0.8 }, "-=0.3");
 }

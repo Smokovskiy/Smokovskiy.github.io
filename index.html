@@ -16,8 +16,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body class="lang-ru">
+    <!-- Шум и свечение -->
     <div class="noise"></div>
     <div class="bg-glow"></div>
+    
+    <!-- Аватар на фоне -->
+    <div class="avatar-bg-fixed">
+        <img src="ava.png" alt="">
+    </div>
+
+    <!-- Контейнер для летающих галочек -->
+    <div id="floating-icons" class="floating-icons-container"></div>
 
     <div class="container-main">
         <header class="nav-header">
@@ -30,7 +39,8 @@
             <div class="avatar-wrapper">
                 <div class="avatar-glow"></div>
                 <div class="avatar-inner">
-                    <img src="https://picsum.photos/seed/smokovskiy/400/400" alt="Avatar">
+                    <!-- Твоя аватарка -->
+                    <img src="ava.png" alt="Smokovskiy" id="main-ava" onerror="this.src='https://picsum.photos/seed/smokovskiy/400/400'">
                 </div>
             </div>
             <h1 class="title">Smokovskiy</h1>
@@ -41,54 +51,63 @@
             <p class="subtitle" data-t="subtitle">Безопасные сделки | Комиссия 4%</p>
         </section>
 
-        <!-- ПЛАШКИ КАНАЛОВ (Теперь все 4) -->
         <section class="links-grid">
             <p class="section-label" data-t="channelsTitle">Основные каналы</p>
             
-            <a href="https://t.me/adaptsmoka" target="_blank" class="glass-card link-item">
-                <div class="icon-box"><i data-lucide="link"></i></div>
-                <div class="link-content">
-                    <h3 data-t="chan1">Адаптер с ссылками</h3>
-                    <p>@adaptsmoka</p>
+            <a href="https://t.me/adaptsmoka" target="_blank" class="link-item border-animated">
+                <div class="glass-card-inner">
+                    <div class="icon-box"><i data-lucide="link"></i></div>
+                    <div class="link-content">
+                        <h3 data-t="chan1">Адаптер с ссылками</h3>
+                        <p>@adaptsmoka</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
-                <i data-lucide="chevron-right" class="arrow"></i>
             </a>
 
-            <a href="https://t.me/smokotzv" target="_blank" class="glass-card link-item">
-                <div class="icon-box"><i data-lucide="star"></i></div>
-                <div class="link-content">
-                    <h3 data-t="chan2">Отзывы со сделок</h3>
-                    <p>@smokotzv</p>
+            <a href="https://t.me/smokotzv" target="_blank" class="link-item border-animated">
+                <div class="glass-card-inner">
+                    <div class="icon-box"><i data-lucide="star"></i></div>
+                    <div class="link-content">
+                        <h3 data-t="chan2">Отзывы со сделок</h3>
+                        <p>@smokotzv</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
-                <i data-lucide="chevron-right" class="arrow"></i>
             </a>
 
-            <a href="https://t.me/SmokovskiyRuch" target="_blank" class="glass-card link-item">
-                <div class="icon-box"><i data-lucide="shield"></i></div>
-                <div class="link-content">
-                    <h3 data-t="chan3">Где я гарант</h3>
-                    <p>@SmokovskiyRuch</p>
+            <a href="https://t.me/SmokovskiyRuch" target="_blank" class="link-item border-animated">
+                <div class="glass-card-inner">
+                    <div class="icon-box"><i data-lucide="shield"></i></div>
+                    <div class="link-content">
+                        <h3 data-t="chan3">Где я гарант</h3>
+                        <p>@SmokovskiyRuch</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
-                <i data-lucide="chevron-right" class="arrow"></i>
             </a>
 
-            <a href="https://t.me/SmokovskiyNews" target="_blank" class="glass-card link-item">
-                <div class="icon-box"><i data-lucide="message-square"></i></div>
-                <div class="link-content">
-                    <h3 data-t="chan4">Новостной канал</h3>
-                    <p>@SmokovskiyNews</p>
+            <a href="https://t.me/SmokovskiyNews" target="_blank" class="link-item border-animated">
+                <div class="glass-card-inner">
+                    <div class="icon-box"><i data-lucide="message-square"></i></div>
+                    <div class="link-content">
+                        <h3 data-t="chan4">Новостной канал</h3>
+                        <p>@SmokovskiyNews</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
-                <i data-lucide="chevron-right" class="arrow"></i>
             </a>
         </section>
 
-        <section class="commission-box glass-card neon-glow">
-            <div class="box-header">
-                <div class="icon-circle"><i data-lucide="zap"></i></div>
-                <h2 data-t="commissionTitle">Гарант сделок</h2>
+        <section class="commission-box border-animated neon-glow">
+            <div class="glass-card-inner p-8">
+                <div class="box-header">
+                    <div class="icon-circle"><i data-lucide="zap"></i></div>
+                    <h2 data-t="commissionTitle">Гарант сделок</h2>
+                </div>
+                <p class="box-text" data-t="commissionText">Я выступаю гарантом между сторонами сделки. Оплата проходит через меня для безопасности обеих сторон.</p>
+                <div class="tag-blue"><span data-t="commissionRate">Комиссия — 4%</span></div>
             </div>
-            <p class="box-text" data-t="commissionText">Я выступаю гарантом между сторонами сделки. Оплата проходит через меня для безопасности обеих сторон.</p>
-            <div class="tag-blue"><span data-t="commissionRate">Комиссия — 4%</span></div>
         </section>
 
         <section class="steps-section">
