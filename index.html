@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
@@ -20,7 +20,6 @@
     <div id="floating-container" class="floating-container"></div>
 
     <div class="container-main">
-        <!-- Кнопка перевода -->
         <header class="nav-header">
             <button onclick="toggleLang()" class="lang-toggle" id="lang-btn">
                 English
@@ -29,11 +28,9 @@
 
         <section class="hero-section">
             <div class="avatar-wrapper">
-                <!-- Ава под авой (Эффект свечения) -->
                 <div class="avatar-bg-glow">
                     <img src="ava.png" alt="" onerror="this.src='https://picsum.photos/seed/smokovskiy/400/400'">
                 </div>
-                <!-- Основная ава -->
                 <div class="avatar-inner">
                     <img src="ava.png" alt="Smokovskiy" onerror="this.src='https://picsum.photos/seed/smokovskiy/400/400'">
                 </div>
@@ -46,7 +43,6 @@
             <p class="subtitle" data-t="subtitle">Безопасные сделки | Комиссия 4%</p>
         </section>
 
-        <!-- Блок доверия -->
         <section class="trust-section border-segments">
             <div class="glass-card-inner p-6">
                 <h2 class="text-xl font-black italic mb-4 tracking-tight" data-t="trustTitle">Безопасность превыше всего</h2>
@@ -66,7 +62,6 @@
             </div>
         </section>
 
-        <!-- Каналы -->
         <section class="links-grid">
             <p class="section-label" data-t="channelsTitle">Основные каналы</p>
             
@@ -115,7 +110,6 @@
             </a>
         </section>
 
-        <!-- Комиссия -->
         <section class="commission-box border-segments">
             <div class="glass-card-inner p-6">
                 <div class="box-header flex items-center gap-4 mb-4">
@@ -127,13 +121,11 @@
             </div>
         </section>
 
-        <!-- Шаги -->
         <section class="steps-section">
             <h2 class="section-title" data-t="howItWorksTitle">Как проходят сделки</h2>
             <div class="steps-list space-y-2" id="steps-container"></div>
         </section>
 
-        <!-- Реквизиты -->
         <section class="wallet-section border-segments">
             <div class="glass-card-inner p-5">
                 <p class="section-label mb-3" data-t="paymentTitle">Реквизиты</p>
