@@ -17,23 +17,23 @@
 </head>
 <body class="lang-ru">
     <div class="noise"></div>
-    
-    <!-- Фоновый слой -->
     <div id="floating-container" class="floating-container"></div>
 
     <div class="container-main">
+        <!-- Кнопка перевода -->
         <header class="nav-header">
-            <button onclick="toggleLang()" class="lang-toggle">
-                <span data-t="switchLang">English</span>
+            <button onclick="toggleLang()" class="lang-toggle" id="lang-btn">
+                English
             </button>
         </header>
 
         <section class="hero-section">
             <div class="avatar-wrapper">
-                <!-- Ава под авой (свечение) -->
+                <!-- Ава под авой (Эффект свечения) -->
                 <div class="avatar-bg-glow">
                     <img src="ava.png" alt="" onerror="this.style.display='none'">
                 </div>
+                <!-- Основная ава -->
                 <div class="avatar-inner">
                     <img src="ava.png" alt="Smokovskiy" onerror="this.src='https://picsum.photos/seed/smokovskiy/400/400'">
                 </div>
@@ -51,7 +51,7 @@
             <div class="glass-card-inner p-6">
                 <h2 class="text-xl font-black italic mb-4 tracking-tight" data-t="trustTitle">Безопасность превыше всего</h2>
                 <div class="space-y-4 text-[13px] text-white/50 leading-relaxed">
-                    <p data-t="trustP1">Smokovskiy — это стандарт безопасности в Telegram. Проведено более 5000+ успешных сделок.</p>
+                    <p data-t="trustP1">Smokovskiy — стандарт безопасности в Telegram. Проведено более 5000+ успешных сделок.</p>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="bg-white/[0.03] p-3 rounded-xl border border-white/5">
                             <p class="text-blue-500 font-black text-lg">5k+</p>
@@ -66,6 +66,7 @@
             </div>
         </section>
 
+        <!-- Каналы -->
         <section class="links-grid">
             <p class="section-label" data-t="channelsTitle">Основные каналы</p>
             
@@ -114,6 +115,7 @@
             </a>
         </section>
 
+        <!-- Комиссия -->
         <section class="commission-box border-segments">
             <div class="glass-card-inner p-6">
                 <div class="box-header flex items-center gap-4 mb-4">
@@ -125,11 +127,13 @@
             </div>
         </section>
 
+        <!-- Шаги -->
         <section class="steps-section">
             <h2 class="section-title" data-t="howItWorksTitle">Как проходят сделки</h2>
             <div class="steps-list space-y-2" id="steps-container"></div>
         </section>
 
+        <!-- Реквизиты -->
         <section class="wallet-section border-segments">
             <div class="glass-card-inner p-5">
                 <p class="section-label mb-3" data-t="paymentTitle">Реквизиты</p>

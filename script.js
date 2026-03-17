@@ -70,30 +70,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function updateUI() {
     const t = translations[currentLang];
+    
+    // Обновляем все элементы с data-t
     document.querySelectorAll('[data-t]').forEach(el => {
         const key = el.getAttribute('data-t');
         if (t[key]) el.textContent = t[key];
     });
 
+    // Обновляем текст на кнопке перевода
+    const langBtn = document.getElementById('lang-btn');
+    if (langBtn) langBtn.textContent = t.switchLang;
+
+    // Обновляем шаги
     const stepsContainer = document.getElementById('steps-container');
-    stepsContainer.innerHTML = '';
-    t.steps.forEach((step, i) => {
-        const div = document.createElement('div');
-        div.className = 'step-card';
-        div.innerHTML = `<span class="step-num">${i + 1}</span><span>${step}</span>`;
-        stepsContainer.appendChild(div);
-    });
+    if (stepsContainer) {
+        stepsContainer.innerHTML = '';
+        t.steps.forEach((step, i) => {
+            const div = document.createElement('div');
+            div.className = 'step-card';
+            div.innerHTML = `<span class="step-num">${i + 1}</span><span>${step}</span>`;
+            stepsContainer.appendChild(div);
+        });
+    }
 }
 
 function toggleLang() {
     currentLang = currentLang === 'ru' ? 'en' : 'ru';
-    updateUI();
+    
+    // Плавная анимация смены
+    gsap.to('.container-main', {
+        opacity: 0,
+        y: 10,
+        duration: 0.2,
+        onComplete: () => {
+            updateUI();
+            gsap.to('.container-main', { opacity: 1, y: 0, duration: 0.4 });
+        }
+    });
 }
 
 function copyWallet() {
     const address = "UQA0SJengh1cb8MJ991gEF-FlpOC6Y3wn6vzkdMiHuO-mmwP";
     const btn = document.getElementById('copy-btn');
     const t = translations[currentLang];
+    
     navigator.clipboard.writeText(address).then(() => {
         btn.textContent = t.copied;
         setTimeout(() => { btn.textContent = t.copy; }, 2000);
@@ -102,6 +122,8 @@ function copyWallet() {
 
 function createFloatingElements() {
     const container = document.getElementById('floating-container');
+    if (!container) return;
+
     const configs = [
         { type: 'ava', count: 5 },
         { type: 'shield', count: 6 }
