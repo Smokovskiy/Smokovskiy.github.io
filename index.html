@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smokovskiy | Telegram Guarantor</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 'deep-gray': '#050507', 'neon-blue': '#3b82f6' },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #050507; color: white; margin: 0; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .neon-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        #root { min-height: 100vh; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const translations = {
+            ru: {
+                role: "Telegram Гарант",
+                subtitle: "Безопасные сделки | Комиссия 4%",
+                channelsTitle: "Основные каналы",
+                commissionTitle: "Гарант сделок",
+                commissionText: "Я выступаю гарантом между сторонами сделки. Оплата проходит через меня для безопасности обеих сторон.",
+                commissionRate: "Комиссия гаранта — 4%.",
+                howItWorksTitle: "Как проходят сделки",
+                steps: [
+                    "Покупатель и продавец договариваются о сделке.",
+                    "Обе стороны пишут гаранту Smokovskiy.",
+                    "Покупатель переводит оплату гаранту.",
+                    "Продавец передает товар или услугу.",
+                    "После подтверждения гарант переводит средства продавцу."
+                ],
+                paymentTitle: "Реквизиты для сделки",
+                copy: "Копировать",
+                copied: "Готово!",
+                contactBtn: "Связаться с гарантом",
+                switchLang: "EN"
+            },
+            en: {
+                role: "Telegram Guarantor",
+                subtitle: "Safe Deals | Commission 4%",
+                channelsTitle: "Main Channels",
+                commissionTitle: "Guarantor Commission",
+                commissionText: "I act as a guarantor between the parties of the deal. Payment passes through me for the safety of both parties.",
+                commissionRate: "Guarantor commission — 4%.",
+                howItWorksTitle: "How Deals Work",
+                steps: [
+                    "Buyer and seller agree on a deal.",
+                    "Both parties message guarantor Smokovskiy.",
+                    "Buyer transfers payment to the guarantor.",
+                    "Seller transfers the goods or service.",
+                    "After confirmation, guarantor transfers funds to the seller."
+                ],
+                paymentTitle: "Payment Details",
+                copy: "Copy",
+                copied: "Done!",
+                contactBtn: "Contact guarantor",
+                switchLang: "RU"
+            }
+        };
+
+        const Icon = ({ name, className }) => {
+            useEffect(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, [name]);
+            return <i data-lucide={name} className={className}></i>;
+        };
+
+        function App() {
+            const [lang, setLang] = useState('ru');
+            const [copied, setCopied] = useState(false);
+            const t = translations[lang];
+            const address = "UQA0SJengh1cb8MJ991gEF-FlpOC6Y3wn6vzkdMiHuO-mmwP";
+
+            const copy = () => {
+                navigator.clipboard.writeText(address);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            };
+
+            const channels = [
+                { title: lang === 'ru' ? "Адаптер с ссылками" : "Links Adapter", user: "@adaptsmoka", icon: "link" },
+                { title: lang === 'ru' ? "Отзывы со сделок" : "Reviews", user: "@smokotzv", icon: "star" },
+                { title: lang === 'ru' ? "Где я гарант" : "Verification", user: "@SmokovskiyRuch", icon: "shield" },
+                { title: lang === 'ru' ? "Новости" : "News", user: "@SmokovskiyNews", icon: "message-circle" },
+            ];
+
+            return (
+                <div className="max-w-md mx-auto px-6 py-12">
+                    <div className="flex justify-end mb-8">
+                        <button onClick={() => setLang(lang === 'ru' ? 'en' : 'ru')} className="glass px-4 py-2 rounded-full text-xs font-bold">
+                            {t.switchLang}
+                        </button>
+                    </div>
+
+                    <div className="text-center mb-12">
+                        <div className="w-24 h-24 bg-blue-500/20 rounded-3xl mx-auto mb-6 flex items-center justify-center border border-blue-500/30">
+                            <Icon name="user" className="w-10 h-10 text-blue-500" />
+                        </div>
+                        <h1 className="text-3xl font-black italic mb-2">Smokovskiy</h1>
+                        <p className="text-blue-500 text-xs font-bold tracking-widest uppercase mb-1">{t.role}</p>
+                        <p className="text-white/30 text-[10px] uppercase">{t.subtitle}</p>
+                    </div>
+
+                    <div className="space-y-4 mb-12">
+                        {channels.map((c, i) => (
+                            <div key={i} className="glass p-4 rounded-2xl flex items-center gap-4">
+                                <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center">
+                                    <Icon name={c.icon} className="w-5 h-5 text-white/40" />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-sm">{c.title}</p>
+                                    <p className="text-xs text-white/30">{c.user}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="glass p-6 rounded-3xl border-blue-500/20 neon-glow mb-12">
+                        <div className="flex items-center gap-3 mb-4">
+                            <Icon name="shield-check" className="w-6 h-6 text-blue-500" />
+                            <h2 className="text-xl font-black italic">{t.commissionTitle}</h2>
+                        </div>
+                        <p className="text-sm text-white/60 mb-4">{t.commissionText}</p>
+                        <p className="font-bold text-blue-500">{t.commissionRate}</p>
+                    </div>
+
+                    <div className="mb-12">
+                        <h2 className="text-center font-black italic mb-6">{t.howItWorksTitle}</h2>
+                        <div className="space-y-3">
+                            {t.steps.map((s, i) => (
+                                <div key={i} className="glass p-4 rounded-xl flex items-center gap-4 text-sm text-white/70">
+                                    <span className="text-blue-500 font-black">{i+1}</span>
+                                    {s}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="glass p-6 rounded-3xl mb-12">
+                        <p className="text-[10px] text-white/30 font-bold uppercase mb-4">{t.paymentTitle}</p>
+                        <div className="bg-black/40 p-4 rounded-xl border border-white/5 flex items-center justify-between">
+                            <code className="text-[10px] text-white/50 truncate mr-4">{address}</code>
+                            <button onClick={copy} className="text-blue-500 text-xs font-bold shrink-0">
+                                {copied ? t.copied : t.copy}
+                            </button>
+                        </div>
+                    </div>
+
+                    <a href="https://t.me/Smokovskiy" target="_blank" className="block w-full bg-blue-600 p-5 rounded-2xl text-center font-black text-xl italic hover:bg-blue-500 transition-colors">
+                        {t.contactBtn}
+                    </a>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
