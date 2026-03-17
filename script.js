@@ -120,9 +120,27 @@ function createFloatingElements() {
     const container = document.getElementById('floating-container');
     if (!container) return;
 
+    // Создаем фоновые "световые пятна"
+    for (let i = 0; i < 3; i++) {
+        const blob = document.createElement('div');
+        blob.className = 'bg-blob';
+        blob.style.left = `${Math.random() * 100}%`;
+        blob.style.top = `${Math.random() * 100}%`;
+        container.appendChild(blob);
+
+        gsap.to(blob, {
+            x: "random(-200, 200)",
+            y: "random(-200, 200)",
+            duration: "random(20, 40)",
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+    }
+
     const configs = [
-        { type: 'ava', count: 5 },
-        { type: 'shield', count: 6 }
+        { type: 'ava', count: 8 },
+        { type: 'shield', count: 10 }
     ];
 
     configs.forEach(config => {
@@ -132,14 +150,14 @@ function createFloatingElements() {
             
             if (config.type === 'ava') {
                 item.className += ' float-ava';
-                item.innerHTML = `<img src="ava.png" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://picsum.photos/seed/${i}/100/100'">`;
-                const size = 25 + Math.random() * 40;
+                item.innerHTML = `<img src="ava.png" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://picsum.photos/seed/${i + 10}/100/100'">`;
+                const size = 20 + Math.random() * 30;
                 item.style.width = `${size}px`;
                 item.style.height = `${size}px`;
             } else {
                 item.innerHTML = '<i data-lucide="shield-check"></i>';
-                item.style.fontSize = `${12 + Math.random() * 15}px`;
-                item.style.color = 'rgba(59, 130, 246, 0.15)';
+                item.style.fontSize = `${10 + Math.random() * 12}px`;
+                item.style.color = 'rgba(59, 130, 246, 0.2)';
             }
 
             item.style.left = `${Math.random() * 100}%`;
@@ -147,13 +165,13 @@ function createFloatingElements() {
             container.appendChild(item);
 
             gsap.to(item, {
-                x: "random(-100, 100)",
-                y: "random(-100, 100)",
-                rotation: "random(-360, 360)",
-                duration: "random(15, 25)",
+                x: "random(-150, 150)",
+                y: "random(-150, 150)",
+                rotation: "random(-720, 720)",
+                duration: "random(20, 35)",
                 repeat: -1,
                 yoyo: true,
-                ease: "sine.inOut"
+                ease: "none"
             });
         }
     });
