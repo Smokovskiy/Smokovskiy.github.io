@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smokovskiy | Telegram Guarantor</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & Libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-gray': '#050507',
+                        'dark-blue': '#0a0f1d',
+                        'neon-blue': '#3b82f6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050507;
+            color: white;
+            overflow-x: hidden;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-hover:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.15);
+            transition: all 0.7s;
+        }
+        .noise {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+        }
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+        .neon-glow-card {
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { motion, AnimatePresence } = FramerMotion;
+
+        const translations = {
+            en: {
+                role: "Telegram Guarantor",
+                subtitle: "Safe Deals | Commission 4%",
+                channelsTitle: "Main Channels",
+                commissionTitle: "Guarantor Commission",
+                commissionText: "I act as a guarantor between the parties of the deal. Payment passes through me for the safety of both parties.",
+                commissionRate: "Guarantor commission — 4%.",
+                howItWorksTitle: "How Deals Work",
+                steps: [
+                    "Buyer and seller agree on a deal.",
+                    "Both parties message guarantor Smokovskiy.",
+                    "Buyer transfers payment to the guarantor.",
+                    "Seller transfers the goods or service.",
+                    "After confirmation, guarantor transfers funds to the seller."
+                ],
+                paymentTitle: "Payment Details",
+                walletName: "Wallet name",
+                walletAddress: "Wallet address",
+                copy: "Copy",
+                copied: "Copied!",
+                contactBtn: "Contact guarantor",
+                footer: "© Smokovskiy Guarantor",
+                switchLang: "RU"
+            },
+            ru: {
+                role: "Telegram Гарант",
+                subtitle: "Безопасные сделки | Комиссия 4%",
+                channelsTitle: "Основные каналы",
+                commissionTitle: "Гарант сделок",
+                commissionText: "Я выступаю гарантом между сторонами сделки. Оплата проходит через меня для безопасности обеих сторон.",
+                commissionRate: "Комиссия гаранта — 4%.",
+                howItWorksTitle: "Как проходят сделки",
+                steps: [
+                    "Покупатель и продавец договариваются о сделке.",
+                    "Обе стороны пишут гаранту Smokovskiy.",
+                    "Покупатель переводит оплату гаранту.",
+                    "Продавец передает товар или услугу.",
+                    "После подтверждения гарант переводит средства продавцу."
+                ],
+                paymentTitle: "Реквизиты для сделки",
+                walletName: "Имя кошелька",
+                walletAddress: "Адрес кошелька",
+                copy: "Копировать",
+                copied: "Скопировано!",
+                contactBtn: "Связаться с гарантом",
+                footer: "© Smokovskiy Guarantor",
+                switchLang: "EN"
+            }
+        };
+
+        const Icon = ({ name, className }) => {
+            const [icon, setIcon] = useState(null);
+            useEffect(() => {
+                if (window.lucide) {
+                    const iconElement = window.lucide.icons[name];
+                    if (iconElement) {
+                        setIcon(iconElement);
+                    }
+                }
+            }, [name]);
+
+            if (!icon) return <div className={className} />;
+            
+            return (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={className}
+                    dangerouslySetInnerHTML={{ __html: icon.contents }}
+                />
+            );
+        };
+
+        const BackgroundElements = () => {
+            return (
+                <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+                    <div className="noise" />
+                    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full animate-pulse-slow" />
+                    <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/5 blur-[120px] rounded-full animate-pulse-slow" style={{ animationDelay: '2s' }} />
+                </div>
+            );
+        };
+
+        const GlassCard = ({ children, className, glow = false, delay = 0 }) => (
+            <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: delay * 0.1 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className={`glass glass-hover p-6 rounded-3xl relative overflow-hidden group ${glow ? 'neon-glow-card' : ''} ${className || ''}`}
+            >
+                {glow && (
+                    <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full group-hover:bg-blue-500/20 transition-all duration-700" />
+                )}
+                <div className="relative z-10">
+                    {children}
+                </div>
+            </motion.div>
+        );
+
+        const WalletCard = ({ lang }) => {
+            const [copied, setCopied] = useState(false);
+            const t = translations[lang];
+            const address = "UQA0SJengh1cb8MJ991gEF-FlpOC6Y3wn6vzkdMiHuO-mmwP";
+
+            const copyToClipboard = () => {
+                navigator.clipboard.writeText(address);
+                setCopied(true);
+                if (window.confetti) {
+                    window.confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#3b82f6', '#ffffff']
+                    });
+                }
+                setTimeout(() => setCopied(false), 2000);
+            };
+
+            return (
+                <GlassCard className="neon-glow-card border-blue-500/40 bg-gradient-to-br from-blue-500/[0.05] to-transparent" glow>
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center">
+                                <Icon name="Zap" className="w-7 h-7 text-blue-500" />
+                            </div>
+                            <div>
+                                <h3 className="font-black text-xl tracking-tight italic">{t.paymentTitle}</h3>
+                                <div className="flex items-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                    <p className="text-[10px] text-blue-500 font-black uppercase tracking-[0.2em]">Network: TON Mainnet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="space-y-5">
+                        <div className="p-4 rounded-2xl bg-black/40 border border-white/5 group hover:border-blue-500/20 transition-colors">
+                            <p className="text-[10px] text-white/30 font-black uppercase tracking-widest mb-1">{t.walletName}</p>
+                            <p className="font-bold text-lg text-white/90 group-hover:text-white transition-colors">Smokovskiy-Deals.ton</p>
+                        </div>
+                        
+                        <div className="relative group">
+                            <p className="text-[10px] text-white/30 font-black uppercase tracking-widest mb-1">{t.walletAddress}</p>
+                            <div className="flex items-center gap-3 bg-black/60 p-4 rounded-2xl border border-white/10 font-mono text-[10px] sm:text-xs break-all group-hover:border-blue-500/30 transition-all">
+                                <span className="text-white/50 group-hover:text-white/80 transition-colors">{address}</span>
+                                <button 
+                                    onClick={copyToClipboard}
+                                    className="ml-auto p-3 bg-blue-500/10 hover:bg-blue-500/20 rounded-xl transition-all text-blue-500 active:scale-90"
+                                >
+                                    {copied ? <Icon name="Check" className="w-5 h-5" /> : <Icon name="Copy" className="w-5 h-5" />}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </GlassCard>
+            );
+        };
+
+        function App() {
+            const [lang, setLang] = useState('ru');
+            const t = translations[lang];
+
+            const toggleLang = () => setLang(prev => prev === 'ru' ? 'en' : 'ru');
+
+            const channels = [
+                { title: lang === 'ru' ? "Адаптер с ссылками" : "Links Adapter", username: "@adaptsmoka", link: "https://t.me/adaptsmoka", icon: "Activity" },
+                { title: lang === 'ru' ? "Отзывы со сделок" : "Deal Reviews", username: "@adaptsmoka", link: "https://t.me/smokotzv", icon: "Star" },
+                { title: lang === 'ru' ? "Где я гарант" : "Where I'm Guarantor", username: "@SmokovskiyRuch", link: "https://t.me/SmokovskiyRuch", icon: "ShieldCheck" },
+                { title: lang === 'ru' ? "Новостной канал" : "News Channel", username: "@SmokovskiyNews", link: "https://t.me/SmokovskiyNews", icon: "MessageSquare" },
+            ];
+
+            return (
+                <div className="min-h-screen relative">
+                    <BackgroundElements />
+                    
+                    <div className="fixed top-8 right-8 z-50">
+                        <button 
+                            onClick={toggleLang}
+                            className="glass glass-hover px-5 py-2.5 rounded-full text-[10px] font-black tracking-widest flex items-center gap-3 border-white/10 shadow-2xl active:scale-95"
+                        >
+                            <Icon name="Globe" className="w-4 h-4 text-blue-500" />
+                            {t.switchLang}
+                        </button>
+                    </div>
+
+                    <main className="max-w-2xl mx-auto px-6 py-24 relative z-10">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={lang}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="space-y-16"
+                            >
+                                <section className="text-center space-y-6">
+                                    <div className="relative inline-block">
+                                        <div className="w-32 h-32 rounded-[32px] p-1 bg-gradient-to-tr from-blue-500/40 via-transparent to-blue-500/20">
+                                            <div className="w-full h-full rounded-[28px] overflow-hidden border-[4px] border-black bg-dark-blue flex items-center justify-center">
+                                                <img 
+                                                    src="https://picsum.photos/seed/smokovskiy/400/400" 
+                                                    alt="Avatar" 
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <h1 className="text-4xl font-black tracking-tighter italic">Smokovskiy</h1>
+                                        <div className="flex items-center justify-center gap-2">
+                                            <Icon name="Verified" className="w-4 h-4 text-blue-500" />
+                                            <span className="text-white/30 text-[10px] font-black uppercase tracking-[0.4em]">Official Account</span>
+                                        </div>
+                                        <div className="flex flex-col items-center gap-2">
+                                            <div className="px-5 py-1.5 rounded-full glass border-blue-500/20">
+                                                <span className="text-blue-500 font-black text-xs tracking-[0.2em] uppercase">{t.role}</span>
+                                            </div>
+                                            <span className="text-white/20 text-[9px] font-black uppercase tracking-[0.3em]">{t.subtitle}</span>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section className="space-y-6">
+                                    <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 text-center">{t.channelsTitle}</h2>
+                                    <div className="grid grid-cols-1 gap-4">
+                                        {channels.map((channel, i) => (
+                                            <a key={i} href={channel.link} target="_blank" rel="noopener noreferrer">
+                                                <GlassCard className="p-5 flex items-center gap-5 group" delay={i}>
+                                                    <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center group-hover:bg-blue-500/10 transition-all">
+                                                        <Icon name={channel.icon} className="text-white/40 group-hover:text-blue-500 transition-colors" />
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <h3 className="font-black text-lg text-white/80 group-hover:text-white transition-colors italic">{channel.title}</h3>
+                                                        <p className="text-xs text-white/30 font-mono">{channel.username}</p>
+                                                    </div>
+                                                    <Icon name="ArrowRight" className="w-4 h-4 text-blue-500 opacity-0 group-hover:opacity-100 transition-all" />
+                                                </GlassCard>
+                                            </a>
+                                        ))}
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <GlassCard glow className="bg-gradient-to-br from-blue-500/[0.08] to-transparent border-blue-500/30 p-8">
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <div className="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center">
+                                                <Icon name="ShieldCheck" className="w-8 h-8 text-blue-500" />
+                                            </div>
+                                            <h2 className="text-3xl font-black italic tracking-tighter">{t.commissionTitle}</h2>
+                                        </div>
+                                        <p className="text-white/60 text-lg mb-8">{t.commissionText}</p>
+                                        <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-between">
+                                            <span className="text-lg font-black italic text-white/90">{t.commissionRate}</span>
+                                        </div>
+                                    </GlassCard>
+                                </section>
+
+                                <section className="space-y-10">
+                                    <div className="text-center">
+                                        <h2 className="text-3xl font-black italic tracking-tighter">{t.howItWorksTitle}</h2>
+                                    </div>
+                                    <div className="space-y-4">
+                                        {t.steps.map((step, i) => (
+                                            <div key={i} className="flex items-center gap-5 p-5 rounded-2xl glass border-white/5">
+                                                <div className="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-500 font-black text-lg">{i + 1}</div>
+                                                <p className="text-white/70 text-sm font-medium">{step}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <WalletCard lang={lang} />
+                                </section>
+
+                                <section className="pt-8">
+                                    <a
+                                        href="https://t.me/Smokovskiy"
+                                        target="_blank"
+                                        className="shimmer-btn block w-full p-8 rounded-[32px] bg-blue-600 text-white text-center shadow-xl hover:bg-blue-500 transition-all font-black text-2xl italic tracking-tighter"
+                                    >
+                                        {t.contactBtn}
+                                    </a>
+                                </section>
+
+                                <footer className="text-center pt-20 pb-24 border-t border-white/5">
+                                    <p className="text-white/20 text-[10px] font-black tracking-[0.5em] uppercase">{t.footer}</p>
+                                </footer>
+                            </motion.div>
+                        </AnimatePresence>
+                    </main>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
