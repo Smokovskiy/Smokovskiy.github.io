@@ -71,17 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateUI() {
     const t = translations[currentLang];
     
-    // Обновляем все элементы с data-t
     document.querySelectorAll('[data-t]').forEach(el => {
         const key = el.getAttribute('data-t');
         if (t[key]) el.textContent = t[key];
     });
 
-    // Обновляем текст на кнопке перевода
     const langBtn = document.getElementById('lang-btn');
     if (langBtn) langBtn.textContent = t.switchLang;
 
-    // Обновляем шаги
     const stepsContainer = document.getElementById('steps-container');
     if (stepsContainer) {
         stepsContainer.innerHTML = '';
@@ -97,7 +94,6 @@ function updateUI() {
 function toggleLang() {
     currentLang = currentLang === 'ru' ? 'en' : 'ru';
     
-    // Плавная анимация смены
     gsap.to('.container-main', {
         opacity: 0,
         y: 10,
