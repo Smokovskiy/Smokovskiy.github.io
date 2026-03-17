@@ -2,6 +2,11 @@ const translations = {
     ru: {
         role: "Telegram Гарант",
         subtitle: "Безопасные сделки | Комиссия 4%",
+        trustTitle: "Безопасность превыше всего",
+        trustP1: "Smokovskiy — это не просто имя, это стандарт безопасности в Telegram. За годы работы проведено более 5000+ успешных сделок без единого неразрешенного спора.",
+        stat1: "Сделок",
+        stat2: "Выплат",
+        trustP2: "Мы используем многоуровневую систему проверки активов и гарантируем сохранность средств до полного выполнения обязательств обеими сторонами.",
         channelsTitle: "Основные каналы",
         chan1: "Адаптер с ссылками",
         chan2: "Отзывы со сделок",
@@ -27,6 +32,11 @@ const translations = {
     en: {
         role: "Telegram Guarantor",
         subtitle: "Safe Deals | Commission 4%",
+        trustTitle: "Security First",
+        trustP1: "Smokovskiy is not just a name, it's a security standard in Telegram. Over 5000+ successful deals have been completed over the years.",
+        stat1: "Deals",
+        stat2: "Payouts",
+        trustP2: "We use a multi-level asset verification system and guarantee the safety of funds until all obligations are met.",
         channelsTitle: "Main Channels",
         chan1: "Links Adapter",
         chan2: "Deal Reviews",
@@ -57,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
     updateUI();
     animateEntrance();
-    createFloatingIcons();
+    createFloatingElements();
 });
 
 function updateUI() {
@@ -92,46 +102,60 @@ function copyWallet() {
     });
 }
 
-// Летающие галочки
-function createFloatingIcons() {
-    const container = document.getElementById('floating-icons');
-    const iconCount = 12;
+// Парящие элементы (Авы + Галочки)
+function createFloatingElements() {
+    const container = document.getElementById('floating-container');
+    
+    // Создаем 6 аватарок и 8 галочек
+    const configs = [
+        { type: 'ava', count: 6 },
+        { type: 'shield', count: 8 }
+    ];
 
-    for (let i = 0; i < iconCount; i++) {
-        const icon = document.createElement('div');
-        icon.className = 'floating-icon';
-        icon.innerHTML = '<i data-lucide="shield-check"></i>';
-        
-        // Случайная позиция
-        const x = Math.random() * window.innerWidth;
-        const y = Math.random() * window.innerHeight;
-        const size = 15 + Math.random() * 30;
-        
-        icon.style.left = `${x}px`;
-        icon.style.top = `${y}px`;
-        icon.style.fontSize = `${size}px`;
-        
-        container.appendChild(icon);
-        
-        // Анимация GSAP
-        gsap.to(icon, {
-            x: "random(-100, 100)",
-            y: "random(-100, 100)",
-            rotation: "random(-360, 360)",
-            duration: "random(10, 20)",
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut"
-        });
-    }
+    configs.forEach(config => {
+        for (let i = 0; i < config.count; i++) {
+            const item = document.createElement('div');
+            item.className = 'float-item';
+            
+            if (config.type === 'ava') {
+                item.className += ' float-ava';
+                item.innerHTML = `<img src="ava.png" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://picsum.photos/seed/${i}/100/100'">`;
+                const size = 30 + Math.random() * 50;
+                item.style.width = `${size}px`;
+                item.style.height = `${size}px`;
+            } else {
+                item.innerHTML = '<i data-lucide="shield-check"></i>';
+                item.style.fontSize = `${15 + Math.random() * 20}px`;
+                item.style.color = 'rgba(59, 130, 246, 0.2)';
+            }
+
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            item.style.left = `${x}px`;
+            item.style.top = `${y}px`;
+
+            container.appendChild(item);
+
+            gsap.to(item, {
+                x: "random(-150, 150)",
+                y: "random(-150, 150)",
+                rotation: "random(-360, 360)",
+                duration: "random(15, 30)",
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        }
+    });
     lucide.createIcons();
 }
 
 function animateEntrance() {
     const tl = gsap.timeline();
-    gsap.set('.hero-section, .link-item, .commission-box, .step-card, .wallet-section, .main-btn', { opacity: 0, y: 30 });
+    gsap.set('.hero-section, .trust-section, .link-item, .commission-box, .step-card, .wallet-section, .main-btn', { opacity: 0, y: 30 });
 
     tl.to('.hero-section', { opacity: 1, y: 0, duration: 1, ease: "power3.out" })
+      .to('.trust-section', { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
       .to('.link-item', { opacity: 1, y: 0, stagger: 0.1, duration: 0.6 }, "-=0.6")
       .to('.commission-box', { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
       .to('.step-card', { opacity: 1, y: 0, stagger: 0.1, duration: 0.5 }, "-=0.4")

@@ -15,80 +15,89 @@ body {
     z-index: 10;
 }
 
-/* Аватар на фоне */
-.avatar-bg-fixed {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.12;
-    filter: blur(80px) grayscale(0.5);
-    pointer-events: none;
-}
-
-.avatar-bg-fixed img {
-    width: 120%;
-    height: 120%;
-    object-fit: cover;
-}
-
-/* Летающие иконки */
-.floating-icons-container {
+/* Фоновые элементы */
+.floating-container {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    overflow: hidden;
 }
 
-.floating-icon {
+.float-item {
     position: absolute;
-    color: rgba(59, 130, 246, 0.15);
+    opacity: 0.1;
+    filter: blur(2px);
 }
 
-/* Анимированная рамка */
-.border-animated {
+.float-ava {
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Анимированная рамка (СЕГМЕНТЫ) */
+.border-segments {
     position: relative;
-    padding: 1px; /* Толщина рамки */
+    padding: 1px;
     border-radius: 24px;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.05);
 }
 
-.border-animated::before {
+.border-segments::before {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     width: 200%;
     height: 200%;
+    /* Создаем много коротких синих сегментов */
     background: conic-gradient(
-        transparent, 
-        rgba(255, 255, 255, 0.3), 
-        rgba(150, 150, 150, 0.1), 
-        transparent 40%
+        from 0deg,
+        transparent 0deg,
+        #3b82f6 10deg,
+        transparent 20deg,
+        transparent 40deg,
+        #3b82f6 50deg,
+        transparent 60deg,
+        transparent 80deg,
+        #3b82f6 90deg,
+        transparent 100deg,
+        transparent 120deg,
+        #3b82f6 130deg,
+        transparent 140deg,
+        transparent 160deg,
+        #3b82f6 170deg,
+        transparent 180deg,
+        transparent 200deg,
+        #3b82f6 210deg,
+        transparent 220deg,
+        transparent 240deg,
+        #3b82f6 250deg,
+        transparent 260deg,
+        transparent 280deg,
+        #3b82f6 290deg,
+        transparent 300deg,
+        transparent 320deg,
+        #3b82f6 330deg,
+        transparent 340deg,
+        transparent 360deg
     );
-    animation: rotateBorder 4s linear infinite;
+    animation: rotateSegments 6s linear infinite;
     transform-origin: center;
     z-index: -1;
     margin-top: -100%;
     margin-left: -100%;
 }
 
-@keyframes rotateBorder {
+@keyframes rotateSegments {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
 .glass-card-inner {
-    background: #0a0f1d; /* Темный фон внутри, чтобы рамка была видна */
+    background: #080c18;
     border-radius: 23px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px;
     height: 100%;
     width: 100%;
 }
@@ -113,11 +122,13 @@ body {
 .subtitle { color: rgba(255, 255, 255, 0.2); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
 
 .link-item { text-decoration: none; color: white; display: block; margin-bottom: 16px; }
+.glass-card-inner { display: flex; align-items: center; gap: 16px; padding: 16px; }
 .icon-box { width: 44px; height: 44px; background: rgba(255, 255, 255, 0.05); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.3); }
 .link-content h3 { margin: 0; font-size: 14px; font-weight: 700; font-style: italic; }
 .link-content p { margin: 0; font-size: 11px; color: rgba(255, 255, 255, 0.2); font-family: monospace; }
 .arrow { color: rgba(255, 255, 255, 0.1); width: 16px; margin-left: auto; }
 
+.trust-section { margin-bottom: 48px; }
 .commission-box { margin: 48px 0; }
 .neon-glow { box-shadow: 0 0 40px rgba(59, 130, 246, 0.1); }
 .box-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }

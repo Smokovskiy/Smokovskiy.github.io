@@ -16,17 +16,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body class="lang-ru">
-    <!-- Шум и свечение -->
     <div class="noise"></div>
     <div class="bg-glow"></div>
     
-    <!-- Аватар на фоне -->
-    <div class="avatar-bg-fixed">
-        <img src="ava.png" alt="">
-    </div>
-
-    <!-- Контейнер для летающих галочек -->
-    <div id="floating-icons" class="floating-icons-container"></div>
+    <!-- Фоновые парящие элементы (авы + галочки) -->
+    <div id="floating-container" class="floating-container"></div>
 
     <div class="container-main">
         <header class="nav-header">
@@ -39,8 +33,7 @@
             <div class="avatar-wrapper">
                 <div class="avatar-glow"></div>
                 <div class="avatar-inner">
-                    <!-- Твоя аватарка -->
-                    <img src="ava.png" alt="Smokovskiy" id="main-ava" onerror="this.src='https://picsum.photos/seed/smokovskiy/400/400'">
+                    <img src="ava.png" alt="Smokovskiy" onerror="this.src='https://picsum.photos/seed/smokovskiy/400/400'">
                 </div>
             </div>
             <h1 class="title">Smokovskiy</h1>
@@ -51,10 +44,31 @@
             <p class="subtitle" data-t="subtitle">Безопасные сделки | Комиссия 4%</p>
         </section>
 
+        <!-- Блок доверия (Новый) -->
+        <section class="trust-section border-segments neon-glow">
+            <div class="glass-card-inner p-8">
+                <h2 class="text-2xl font-black italic mb-6 tracking-tight" data-t="trustTitle">Безопасность превыше всего</h2>
+                <div class="space-y-6 text-sm text-white/60 leading-relaxed">
+                    <p data-t="trustP1">Smokovskiy — это не просто имя, это стандарт безопасности в Telegram. За годы работы проведено более 5000+ успешных сделок без единого неразрешенного спора.</p>
+                    <div class="grid grid-cols-2 gap-4 py-4">
+                        <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                            <p class="text-blue-500 font-black text-xl">5k+</p>
+                            <p class="text-[9px] uppercase tracking-widest opacity-50" data-t="stat1">Сделок</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                            <p class="text-blue-500 font-black text-xl">100%</p>
+                            <p class="text-[9px] uppercase tracking-widest opacity-50" data-t="stat2">Выплат</p>
+                        </div>
+                    </div>
+                    <p data-t="trustP2">Мы используем многоуровневую систему проверки активов и гарантируем сохранность средств до полного выполнения обязательств обеими сторонами.</p>
+                </div>
+            </div>
+        </section>
+
         <section class="links-grid">
             <p class="section-label" data-t="channelsTitle">Основные каналы</p>
             
-            <a href="https://t.me/adaptsmoka" target="_blank" class="link-item border-animated">
+            <a href="https://t.me/adaptsmoka" target="_blank" class="link-item border-segments">
                 <div class="glass-card-inner">
                     <div class="icon-box"><i data-lucide="link"></i></div>
                     <div class="link-content">
@@ -65,7 +79,7 @@
                 </div>
             </a>
 
-            <a href="https://t.me/smokotzv" target="_blank" class="link-item border-animated">
+            <a href="https://t.me/smokotzv" target="_blank" class="link-item border-segments">
                 <div class="glass-card-inner">
                     <div class="icon-box"><i data-lucide="star"></i></div>
                     <div class="link-content">
@@ -76,7 +90,7 @@
                 </div>
             </a>
 
-            <a href="https://t.me/SmokovskiyRuch" target="_blank" class="link-item border-animated">
+            <a href="https://t.me/SmokovskiyRuch" target="_blank" class="link-item border-segments">
                 <div class="glass-card-inner">
                     <div class="icon-box"><i data-lucide="shield"></i></div>
                     <div class="link-content">
@@ -87,7 +101,7 @@
                 </div>
             </a>
 
-            <a href="https://t.me/SmokovskiyNews" target="_blank" class="link-item border-animated">
+            <a href="https://t.me/SmokovskiyNews" target="_blank" class="link-item border-segments">
                 <div class="glass-card-inner">
                     <div class="icon-box"><i data-lucide="message-square"></i></div>
                     <div class="link-content">
@@ -99,7 +113,7 @@
             </a>
         </section>
 
-        <section class="commission-box border-animated neon-glow">
+        <section class="commission-box border-segments neon-glow">
             <div class="glass-card-inner p-8">
                 <div class="box-header">
                     <div class="icon-circle"><i data-lucide="zap"></i></div>
