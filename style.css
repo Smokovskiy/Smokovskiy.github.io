@@ -1,5 +1,5 @@
 body {
-    background-color: #050507;
+    background-color: rgb(2, 2, 4);
     color: white;
     margin: 0;
     font-family: 'Inter', sans-serif;
@@ -7,25 +7,42 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+    z-index: -1;
+    pointer-events: none;
+}
+
 .container-main {
-    max-width: 420px;
+    max-width: 440px;
     margin: 0 auto;
-    padding: 0 20px 80px;
+    padding: 0 24px 100px;
     position: relative;
     z-index: 10;
 }
 
-/* БЕГУЩИЕ ЛИНИИ */
 .border-segments {
     position: relative;
     padding: 1.5px;
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.03);
-    margin-bottom: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    margin-bottom: 20px;
     display: block;
     text-decoration: none;
     color: inherit;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.border-segments:hover {
+    transform: scale(1.02) translateY(-4px);
 }
 
 .border-segments::before {
@@ -33,19 +50,21 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 150%;
-    height: 150%;
+    width: 200%;
+    height: 200%;
     transform: translate(-50%, -50%);
     background: conic-gradient(
         from 0deg,
         transparent 0deg,
-        #3b82f6 20deg, 
-        transparent 40deg,
+        rgb(59, 130, 246) 30deg, 
+        rgb(96, 165, 250) 60deg,
+        transparent 90deg,
         transparent 180deg,
-        #3b82f6 200deg,
-        transparent 220deg
+        rgb(59, 130, 246) 210deg,
+        rgb(96, 165, 250) 240deg,
+        transparent 270deg
     );
-    animation: rotateSegments 4s linear infinite;
+    animation: rotateSegments 3s linear infinite;
 }
 
 @keyframes rotateSegments {
@@ -54,83 +73,194 @@ body {
 }
 
 .glass-card-inner {
-    background: #050507;
-    border-radius: 19px;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 23px;
     position: relative;
     z-index: 1;
     width: 100%;
     height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ФОНОВЫЕ АНИМАЦИИ */
-.floating-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-.bg-blob {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
-    filter: blur(80px);
-    border-radius: 50%;
-}
-.float-item { position: absolute; opacity: 0.12; }
-.float-ava { border-radius: 50%; overflow: hidden; filter: blur(1px); }
-
-/* АВАТАР */
 .avatar-wrapper {
     position: relative;
-    width: 110px;
-    height: 110px;
-    margin: 0 auto 24px;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 32px;
 }
 
 .avatar-bg-glow {
     position: absolute;
-    inset: -15px;
+    inset: -20px;
     z-index: -1;
-    opacity: 0.6;
-    filter: blur(25px);
+    opacity: 0.8;
+    filter: blur(35px);
     border-radius: 50%;
     overflow: hidden;
-    transform: scale(1.2);
+    transform: scale(1.3);
+    background: radial-gradient(circle, rgb(59, 130, 246) 0%, transparent 70%);
 }
-
-.avatar-bg-glow img { width: 100%; height: 100%; object-fit: cover; }
 
 .avatar-inner {
     width: 100%;
     height: 100%;
-    background: #0a0f1d;
-    border-radius: 35px;
-    border: 1px solid rgba(59, 130, 246, 0.4);
+    background: rgb(10, 15, 29);
+    border-radius: 42px;
+    border: 2px solid rgba(59, 130, 246, 0.5);
     overflow: hidden;
     position: relative;
     z-index: 2;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
 }
 
 .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Остальные стили */
+.title { 
+    font-size: 48px; 
+    font-weight: 900; 
+    font-style: italic; 
+    letter-spacing: -2px; 
+    margin-bottom: 8px;
+    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(148, 163, 184));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.badge-row { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px; 
+    margin-bottom: 12px; 
+}
+
+.icon-blue { color: rgb(59, 130, 246); width: 18px; filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5)); }
+.badge-text { color: rgb(59, 130, 246); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; }
+.subtitle { color: rgba(255, 255, 255, 0.3); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; text-align: center; }
+
+.icon-box { 
+    width: 48px; 
+    height: 48px; 
+    background: rgba(59, 130, 246, 0.05); 
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    border-radius: 14px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: rgb(59, 130, 246);
+    transition: all 0.3s ease;
+}
+
+.link-item:hover .icon-box {
+    background: rgba(59, 130, 246, 0.2);
+    transform: rotate(-5deg) scale(1.1);
+}
+
+.link-content h3 { font-size: 15px; font-weight: 800; font-style: italic; margin: 0; color: rgb(248, 250, 252); }
+.link-content p { font-size: 11px; color: rgba(255, 255, 255, 0.3); font-family: 'JetBrains Mono', monospace; margin: 0; }
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    background: rgba(59, 130, 246, 0.05);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+.main-btn { 
+    display: block; 
+    background: linear-gradient(135deg, rgb(37, 99, 219), rgb(29, 78, 216));
+    color: white; 
+    text-decoration: none; 
+    padding: 24px; 
+    border-radius: 24px; 
+    text-align: center; 
+    font-size: 22px; 
+    font-weight: 900; 
+    font-style: italic; 
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3); 
+    position: relative; 
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.main-btn:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(37, 99, 235, 0.4);
+}
+
+.shimmer::after { 
+    content: ''; 
+    position: absolute; 
+    top: 0; 
+    left: -100%; 
+    width: 50%; 
+    height: 100%; 
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); 
+    animation: shimmer 2.5s infinite; 
+}
+
+@keyframes shimmer { 100% { left: 200%; } }
+
+.noise { 
+    position: fixed; 
+    inset: 0; 
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); 
+    opacity: 0.03; 
+    pointer-events: none; 
+    z-index: 50; 
+}
+
+.bg-blob {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    filter: blur(100px);
+    border-radius: 50%;
+}
+
 .nav-header { display: flex; justify-content: flex-end; padding: 32px 0; }
-.lang-toggle { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 20px; border-radius: 100px; font-size: 10px; font-weight: 900; color: white; cursor: pointer; }
+.lang-toggle { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 24px; border-radius: 100px; font-size: 11px; font-weight: 900; color: white; cursor: pointer; backdrop-filter: blur(10px); }
 
-.hero-section { text-align: center; margin-bottom: 40px; }
-.title { font-size: 38px; font-weight: 900; font-style: italic; letter-spacing: -1.5px; margin-bottom: 4px; }
-.badge-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; }
-.icon-blue { color: #3b82f6; width: 16px; }
-.badge-text { color: #3b82f6; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
-.subtitle { color: rgba(255, 255, 255, 0.2); font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+.hero-section { text-align: center; margin-bottom: 48px; }
+.section-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; color: rgba(255, 255, 255, 0.2); margin-bottom: 16px; display: block; }
 
-.icon-box { width: 40px; height: 40px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.2); }
-.link-content h3 { font-size: 13px; font-weight: 700; font-style: italic; margin: 0; }
-.link-content p { font-size: 10px; color: rgba(255, 255, 255, 0.2); font-family: 'JetBrains Mono', monospace; margin: 0; }
-.arrow { color: rgba(255, 255, 255, 0.1); width: 14px; margin-left: auto; }
+.icon-circle { width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: rgb(59, 130, 246); }
+.tag-blue { background: rgba(59, 130, 246, 0.1); padding: 8px 16px; border-radius: 12px; display: inline-block; }
+.tag-blue span { color: rgb(59, 130, 246); font-size: 11px; font-weight: 900; text-transform: uppercase; }
 
-.icon-circle { width: 40px; height: 40px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #3b82f6; }
-.tag-blue { background: rgba(59, 130, 246, 0.1); padding: 6px 12px; border-radius: 10px; display: inline-block; }
-.tag-blue span { color: #3b82f6; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+.section-title { font-size: 20px; font-weight: 900; font-style: italic; text-align: center; margin-bottom: 32px; }
+.step-card { display: flex; align-items: center; gap: 16px; padding: 16px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; font-size: 13px; color: rgba(255, 255, 255, 0.6); }
+.step-num { width: 32px; height: 32px; background: rgba(59, 130, 246, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: rgb(59, 130, 246); font-weight: 900; flex-shrink: 0; }
 
-.section-title { font-size: 18px; font-weight: 900; font-style: italic; text-align: center; margin-bottom: 24px; }
-.step-card { display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; font-size: 12px; color: rgba(255, 255, 255, 0.5); }
-.step-num { width: 28px; height: 28px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #3b82f6; font-weight: 900; flex-shrink: 0; }
+.wallet-box { background: rgba(0, 0, 0, 0.4); padding: 16px; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(255, 255, 255, 0.05); }
+.wallet-box code { font-size: 10px; color: rgba(255, 255, 255, 0.4); font-family: 'JetBrains Mono', monospace; overflow: hidden; text-overflow: ellipsis; margin-right: 12px; }
+.wallet-box button { color: rgb(59, 130, 246); font-size: 10px; font-weight: 900; text-transform: uppercase; border: none; background: none; cursor: pointer; padding: 4px 8px; }
 
-.wallet-box { background: rgba(0, 0, 0, 0.3); padding: 12px;
+.copyright { text-align: center; font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 8px; color: rgba(255, 255, 255, 0.05); margin-top: 60px; }
+
+.gift-highlight .glass-card-inner {
+    background: rgba(59, 130, 246, 0.1) !important;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.gift-highlight .icon-box {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: rgb(59, 130, 246) !important;
+}
+
+.gift-highlight h3 {
+    color: rgb(59, 130, 246) !important;
+}
+
+.floating-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.float-item { position: absolute; opacity: 0.15; }
+.float-ava { border-radius: 50%; overflow: hidden; filter: blur(1px); }

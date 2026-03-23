@@ -4,146 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smokovskiy | Telegram Guarantor</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="lang-ru">
+<body>
     <div class="noise"></div>
-    <div id="floating-container" class="floating-container"></div>
-
+    <div class="floating-container" id="floating-container"></div>
     <div class="container-main">
         <header class="nav-header">
-            <button onclick="toggleLang()" class="lang-toggle" id="lang-btn">
-                English
-            </button>
+            <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">English</button>
         </header>
-
         <section class="hero-section">
             <div class="avatar-wrapper">
                 <div class="avatar-bg-glow">
-                    <img src="ava.png" alt="" onerror="this.src='https://picsum.photos/seed/smokovskiy/400/400'">
+                    <img src="ava.png" alt="" onerror="this.src='https://picsum.photos/seed/Smokovskiy/400/400'">
                 </div>
                 <div class="avatar-inner">
-                    <img src="ava.png" alt="Smokovskiy" onerror="this.src='https://picsum.photos/seed/smokovskiy/400/400'">
+                    <img src="ava.png" alt="Smokovskiy" onerror="this.src='https://picsum.photos/seed/Smokovskiy/400/400'">
                 </div>
             </div>
-            <h1 class="title">Smokovskiy</h1>
+            <h1 class="title">@Smokovskiy</h1>
             <div class="badge-row">
                 <i data-lucide="shield-check" class="icon-blue"></i>
                 <span class="badge-text" data-t="role">Telegram Гарант</span>
             </div>
             <p class="subtitle" data-t="subtitle">Безопасные сделки | Комиссия 4%</p>
         </section>
-
         <section class="trust-section border-segments">
-            <div class="glass-card-inner p-6">
-                <h2 class="text-xl font-black italic mb-4 tracking-tight" data-t="trustTitle">Безопасность превыше всего</h2>
-                <div class="space-y-4 text-[13px] text-white/50 leading-relaxed">
-                    <p data-t="trustP1">Smokovskiy — стандарт безопасности в Telegram. Проведено более 5000+ успешных сделок.</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-white/[0.03] p-3 rounded-xl border border-white/5">
-                            <p class="text-blue-500 font-black text-lg">5k+</p>
-                            <p class="text-[8px] uppercase tracking-widest opacity-40" data-t="stat1">Сделок</p>
+            <div class="glass-card-inner p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-black italic tracking-tighter" data-t="trustTitle">Кто такой гарант?</h2>
+                    <div class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full">
+                        <span class="text-[9px] font-black text-blue-500 uppercase tracking-widest">Verified</span>
+                    </div>
+                </div>
+                <div class="space-y-6 text-[14px] text-white/40 leading-relaxed font-medium">
+                    <p data-t="trustP1">Гарант — это физическое лицо, компания или организация, которые официально подтверждают выполнение обязательств одной стороны перед другой. Проведено более 200+ успешных сделок.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="stat-card">
+                            <p class="text-blue-500 font-black text-2xl tracking-tighter mb-1">200+</p>
+                            <p class="text-[9px] uppercase tracking-[0.2em] font-black opacity-30" data-t="stat1">Сделок</p>
                         </div>
-                        <div class="bg-white/[0.03] p-3 rounded-xl border border-white/5">
-                            <p class="text-blue-500 font-black text-lg">100%</p>
-                            <p class="text-[8px] uppercase tracking-widest opacity-40" data-t="stat2">Выплат</p>
+                        <div class="stat-card">
+                            <p class="text-blue-500 font-black text-2xl tracking-tighter mb-1">100%</p>
+                            <p class="text-[9px] uppercase tracking-[0.2em] font-black opacity-30" data-t="stat2">Выплат</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
         <section class="links-grid">
-            <p class="section-label" data-t="channelsTitle">Основные каналы</p>
-            
+            <p class="section-label" data-t="channelsTitle">Навигация</p>
+            <a href="https://t.me/smokovskiyNews" target="_blank" class="link-item border-segments">
+                <div class="glass-card-inner flex items-center gap-4 p-3">
+                    <div class="icon-box"><i data-lucide="radio"></i></div>
+                    <div class="link-content">
+                        <h3 data-t="chan1">Новостной канал</h3>
+                        <p>@smokovskiyNews</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="arrow"></i>
+                </div>
+            </a>
             <a href="https://t.me/adaptsmoka" target="_blank" class="link-item border-segments">
                 <div class="glass-card-inner flex items-center gap-4 p-3">
                     <div class="icon-box"><i data-lucide="link"></i></div>
                     <div class="link-content">
-                        <h3 data-t="chan1">Адаптер с ссылками</h3>
+                        <h3 data-t="chan2">Адаптер</h3>
                         <p>@adaptsmoka</p>
                     </div>
                     <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
             </a>
-
             <a href="https://t.me/smokotzv" target="_blank" class="link-item border-segments">
                 <div class="glass-card-inner flex items-center gap-4 p-3">
                     <div class="icon-box"><i data-lucide="star"></i></div>
                     <div class="link-content">
-                        <h3 data-t="chan2">Отзывы со сделок</h3>
+                        <h3 data-t="chan3">Отзывы</h3>
                         <p>@smokotzv</p>
                     </div>
                     <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
             </a>
-
-            <a href="https://t.me/SmokovskiyRuch" target="_blank" class="link-item border-segments">
+            <a href="https://t.me/smokovskiyRuch" target="_blank" class="link-item border-segments">
                 <div class="glass-card-inner flex items-center gap-4 p-3">
-                    <div class="icon-box"><i data-lucide="shield"></i></div>
+                    <div class="icon-box"><i data-lucide="check-circle"></i></div>
                     <div class="link-content">
-                        <h3 data-t="chan3">Где я гарант</h3>
-                        <p>@SmokovskiyRuch</p>
+                        <h3 data-t="chanRuch">Ручения</h3>
+                        <p>@smokovskiyRuch</p>
                     </div>
                     <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
             </a>
-
-            <a href="https://t.me/SmokovskiyNews" target="_blank" class="link-item border-segments">
+            <a href="https://t.me/Smokovskiy" target="_blank" class="link-item border-segments">
                 <div class="glass-card-inner flex items-center gap-4 p-3">
-                    <div class="icon-box"><i data-lucide="message-square"></i></div>
+                    <div class="icon-box"><i data-lucide="user"></i></div>
                     <div class="link-content">
-                        <h3 data-t="chan4">Новостной канал</h3>
-                        <p>@SmokovskiyNews</p>
+                        <h3 data-t="chan4">Личный контакт</h3>
+                        <p>@Smokovskiy</p>
                     </div>
                     <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
             </a>
         </section>
-
         <section class="commission-box border-segments">
             <div class="glass-card-inner p-6">
-                <div class="box-header flex items-center gap-4 mb-4">
-                    <div class="icon-circle"><i data-lucide="zap"></i></div>
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="icon-circle"><i data-lucide="percent"></i></div>
                     <h2 class="text-xl font-black italic" data-t="commissionTitle">Гарант сделок</h2>
                 </div>
-                <p class="text-[13px] text-white/50 mb-4" data-t="commissionText">Я выступаю гарантом между сторонами сделки. Оплата проходит через меня.</p>
+                <p class="text-[13px] text-white/50 mb-4" data-t="commissionText">Безопасность ваших активов — мой главный приоритет. Работаю честно и быстро.</p>
                 <div class="tag-blue"><span data-t="commissionRate">Комиссия — 4%</span></div>
             </div>
         </section>
-
-        <section class="steps-section">
+        <section class="how-it-works mb-10">
             <h2 class="section-title" data-t="howItWorksTitle">Как проходят сделки</h2>
-            <div class="steps-list space-y-2" id="steps-container"></div>
+            <div class="space-y-3" id="steps-container"></div>
         </section>
-
         <section class="wallet-section border-segments">
             <div class="glass-card-inner p-5">
                 <p class="section-label mb-3" data-t="paymentTitle">Реквизиты</p>
                 <div class="wallet-box">
-                    <code id="wallet-address">UQA0SJengh1cb8MJ991gEF-FlpOC6Y3wn6vzkdMiHuO-mmwP</code>
+                    <code id="wallet-address">Smokovskiy-deals.ton</code>
                     <button onclick="copyWallet()" id="copy-btn" data-t="copy">Copy</button>
                 </div>
             </div>
         </section>
-
         <footer class="footer-action">
             <a href="https://t.me/Smokovskiy" target="_blank" class="main-btn shimmer">
-                <span data-t="contactBtn">Связаться с гарантом</span>
+                <span data-t="contactBtn">Связаться с @Smokovskiy</span>
             </a>
-            <p class="copyright">© Smokovskiy 2026</p>
+            <p class="copyright">© @Smokovskiy 2026</p>
         </footer>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
